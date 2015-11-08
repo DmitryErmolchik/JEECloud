@@ -1,5 +1,6 @@
 package com.dim4tech.jeecloud.library.rest;
 
+import com.dim4tech.jeecloud.domain.*;
 import com.dim4tech.jeecloud.library.domain.ServiceDescription;
 import com.dim4tech.jeecloud.library.service.LibraryService;
 
@@ -10,8 +11,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.Set;
 
-@Path("library")
+@Path("service")
 @RequestScoped
 public class LibraryServiceController {
     @Inject
@@ -20,7 +22,12 @@ public class LibraryServiceController {
     @GET
     @Path("{name}")
     @Produces(MediaType.APPLICATION_JSON)
-    public ServiceDescription getServiceDescriptionWithMinimalLoad(@PathParam("name") String name) {
-        return libraryService.getServiceDescriptionWithMinimalLoad(name);
+    public JEECloudResponse<ServiceDescription> getServiceDescriptionWithMinimalLoad(@PathParam("name") String name) {
+        try {
+            return new JEECloudResponse<ServiceDescription>(libraryService.getServiceDescriptionWithMinimalLoad(name), null);
+        }
+        catch (Exception ex) {
+            return new JEECloudResponse(null, new JEECloudError(ex.getMessage()));
+        }
     }
 }

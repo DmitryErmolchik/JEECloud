@@ -1,22 +1,19 @@
 package com.dim4tech.jeecloud.domain;
 
 public class JEECloudResponse<T> {
-    private Error error;
     private T response;
+    private JEECloudError error;
 
-    public JEECloudResponse(Error error) {
+    public JEECloudResponse(T response, JEECloudError error) {
+        this.response = response;
         this.error = error;
     }
 
-    public JEECloudResponse(T response) {
-        this.response = response;
-    }
-
-    public Error getError() {
+    public JEECloudError getError() {
         return error;
     }
 
-    public void setError(Error error) {
+    public void setError(JEECloudError error) {
         this.error = error;
     }
 
