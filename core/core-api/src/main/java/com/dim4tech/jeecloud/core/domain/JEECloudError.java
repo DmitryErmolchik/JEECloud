@@ -1,4 +1,4 @@
-package com.dim4tech.jeecloud.domain;
+package com.dim4tech.jeecloud.core.domain;
 
 public class JEECloudError {
     private String message;
