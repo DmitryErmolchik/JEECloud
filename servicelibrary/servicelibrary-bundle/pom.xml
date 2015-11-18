@@ -12,20 +12,55 @@
     <artifactId>servicelibrary-bundle</artifactId>
     <packaging>war</packaging>
 
+    <profiles>
+        <profile>
+            <id>WildFly</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>${project.parent.groupId}</groupId>
+                    <artifactId>core-bl-jboss</artifactId>
+                    <version>${project.parent.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>GlassFish</id>
+            <dependencies>
+                <dependency>
+                    <groupId>${project.parent.groupId}</groupId>
+                    <artifactId>core-bl-glassfish</artifactId>
+                    <version>${project.parent.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
     <dependencies>
         <dependency>
-            <groupId>com.dim4tech.jeecloud</groupId>
-            <artifactId>servicelibrary-core</artifactId>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>core-bl</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.dim4tech.jeecloud</groupId>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>servicelibrary-bl</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
             <artifactId>servicelibrary-ui</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

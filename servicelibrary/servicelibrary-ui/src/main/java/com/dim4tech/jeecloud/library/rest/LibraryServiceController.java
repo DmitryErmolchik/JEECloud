@@ -1,23 +1,34 @@
 package com.dim4tech.jeecloud.library.rest;
 
-import com.dim4tech.jeecloud.domain.*;
+import com.dim4tech.jeecloud.core.domain.*;
 import com.dim4tech.jeecloud.library.domain.ServiceDescription;
 import com.dim4tech.jeecloud.library.service.LibraryService;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
+import java.net.URL;
 import java.util.Set;
 
 @Path("service")
 @RequestScoped
 public class LibraryServiceController {
+    @Context
+    private UriInfo uriInfo;
+
     @Inject
     private LibraryService libraryService;
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public JEECloudResponse<Set<ServiceDescription>> getServiceDescriptions() {
+        return new JEECloudResponse(libraryService.getAvailableServices(), null);
+    }
 
     @GET
     @Path("{name}")
@@ -29,5 +40,33 @@ public class LibraryServiceController {
         catch (Exception ex) {
             return new JEECloudResponse(null, new JEECloudError(ex.getMessage()));
         }
+    }
+
+    @GET
+    @Path("{name}/{url}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JEECloudResponse<ServiceDescription> getServiceDescription(@PathParam("name") String name, @PathParam("url") URL url) {
+        try {
+            return new JEECloudResponse<ServiceDescription>(libraryService.get(name, url), null);
+        }
+        catch (Exception ex) {
+            return new JEECloudResponse(null, new JEECloudError(ex.getMessage()));
+        }
+    }
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createServiceDescription(ServiceDescription serviceDescription) {
+        libraryService.add(serviceDescription);
+        URI serviceUri = uriInfo.getAbsolutePathBuilder().path(serviceDescription.getName()).build();
+        return Response.created(serviceUri).build();
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateServiceDescription(ServiceDescription serviceDescription) {
+        libraryService.add(serviceDescription);
+        URI serviceUri = uriInfo.getAbsolutePathBuilder().path(serviceDescription.getName()).build();
+        return Response.ok(serviceUri).build();
     }
 }
