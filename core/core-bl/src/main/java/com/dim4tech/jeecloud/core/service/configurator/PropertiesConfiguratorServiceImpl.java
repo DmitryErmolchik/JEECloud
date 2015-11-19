@@ -29,14 +29,6 @@ public class PropertiesConfiguratorServiceImpl implements ConfiguratorService {
         }
     }
 
-    private File getFileFromUrl(URL url) {
-        try {
-            return new File(url.toURI());
-        } catch (URISyntaxException e) {
-            return new File(url.getPath());
-        }
-    }
-
     @Override
     public String getStringValue(String name) {
         return properties.getProperty(name);
