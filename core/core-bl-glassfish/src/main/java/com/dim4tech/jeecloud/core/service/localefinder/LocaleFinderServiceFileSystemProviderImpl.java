@@ -1,6 +1,4 @@
-package com.dim4tech.jeecloud.core.service.localefinde;
-
-import com.dim4tech.jeecloud.core.service.localefinder.AbstractLocaleFinderService;
+package com.dim4tech.jeecloud.core.service.localefinder;
 
 import javax.enterprise.context.Dependent;
 import java.io.File;
