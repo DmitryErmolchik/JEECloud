@@ -7,6 +7,7 @@ import java.util.Set;
 
 public interface LibraryService {
     void add(ServiceDescription serviceDescription);
+    void update(ServiceDescription serviceDescription);
     void delete(String name, URL url);
     void delete(ServiceDescription serviceDescription);
     ServiceDescription get(String name, URL url);
