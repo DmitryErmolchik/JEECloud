@@ -8,11 +8,9 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Enumeration;
 import java.util.Properties;
 
 @Stateless
@@ -24,16 +22,7 @@ public class PropertiesConfiguratorServiceImpl implements ConfiguratorService {
     @PostConstruct
     private void loadProperties() {
         try {
-            Enumeration<URL> enumerator = this.getClass().getClassLoader().getResources("");
-            while (enumerator.hasMoreElements()) {
-                File file = getFileFromUrl(enumerator.nextElement());
-                File[] files = file.listFiles(new FileFilter() {
-                    @Override
-                    public boolean accept(File file) {
-                        return file.getName().endsWith("properties");
-                    }
-                });
-            }
+            properties.load(this.getClass().getResourceAsStream("/application.properties"));
         } catch (IOException e) {
             LOG.error(e.getMessage());
             throw new JEECloudException(new JEECloudExceptionMessage(e.getMessage()));
