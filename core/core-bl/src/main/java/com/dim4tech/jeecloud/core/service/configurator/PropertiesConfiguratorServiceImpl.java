@@ -1,8 +1,6 @@
 package com.dim4tech.jeecloud.core.service.configurator;
 
 import com.dim4tech.jeecloud.core.annotation.ConfigurationProperty;
-import com.dim4tech.jeecloud.core.domain.exception.JEECloudException;
-import com.dim4tech.jeecloud.core.domain.exception.JEECloudExceptionMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +11,7 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.Set;
 
 @Startup
 @Stateless
@@ -38,17 +37,22 @@ public class PropertiesConfiguratorServiceImpl implements ConfiguratorService {
     }
 
     @Override
-    public String getStringValue(String name) {
-        return properties.getProperty(name);
+    public Set<String> getAllKeys() {
+        return properties.stringPropertyNames();
     }
 
     @Override
-    public Integer getIntegerValue(String name) {
-        return Integer.parseInt(properties.getProperty(name));
+    public String getStringValue(String key) {
+        return properties.getProperty(key);
     }
 
     @Override
-    public Double getDoubleValue(String name) {
-        return Double.parseDouble(properties.getProperty(name));
+    public Integer getIntegerValue(String key) {
+        return Integer.parseInt(properties.getProperty(key));
+    }
+
+    @Override
+    public Double getDoubleValue(String key) {
+        return Double.parseDouble(properties.getProperty(key));
     }
 }

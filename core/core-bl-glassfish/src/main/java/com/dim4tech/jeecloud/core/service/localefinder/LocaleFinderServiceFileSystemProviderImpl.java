@@ -13,8 +13,12 @@ import java.util.Set;
 @Dependent
 public class LocaleFinderServiceFileSystemProviderImpl extends AbstractLocaleFinderService {
     @Override
-    public Set<Locale> getLocales(String path, String bundle) {
+    public Set<Locale> getLocales(String bundlePath) {
         Set<Locale> locales = new HashSet<>();
+
+        String path = getPath(bundlePath);
+        String bundle = getBundle(bundlePath);
+
         try {
             Path resourcePath = Paths.get(this.getClass().getClassLoader().getResource(path).toURI());
             File[] files = resourcePath.toFile().listFiles(new FileFilter() {

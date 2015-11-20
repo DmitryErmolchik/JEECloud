@@ -1,7 +1,10 @@
 package com.dim4tech.jeecloud.core.service.configurator;
 
+import java.util.Set;
+
 public interface ConfiguratorService {
-    String getStringValue(String name);
-    Integer getIntegerValue(String name);
-    Double getDoubleValue(String name);
+    Set<String> getAllKeys();
+    String getStringValue(String key);
+    Integer getIntegerValue(String key);
+    Double getDoubleValue(String key);
 }

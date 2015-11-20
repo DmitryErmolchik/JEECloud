@@ -2,22 +2,17 @@ package com.dim4tech.jeecloud.library.service;
 
 import com.dim4tech.jeecloud.core.annotation.Localize;
 import com.dim4tech.jeecloud.core.domain.exception.JEECloudException;
-import com.dim4tech.jeecloud.core.service.localizer.LocalizerService;
 import com.dim4tech.jeecloud.library.domain.LibraryExceptionMessage;
 import com.dim4tech.jeecloud.library.domain.ServiceDescription;
 import com.dim4tech.jeecloud.library.interceptor.LocalizationInterceptor;
 
 import javax.ejb.Singleton;
-import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import java.net.URL;
 import java.util.*;
 
 @Singleton
 public class LibraryServiceSingletoneImpl implements LibraryService {
-
-    @Inject
-    private LocalizerService localizerService;
 
     private Map<String, Map<URL, ServiceDescription>> serviceDescriptionMap = new HashMap<>();
 

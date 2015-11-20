@@ -8,6 +8,8 @@ import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Inject;
+import java.util.HashSet;
+import java.util.Set;
 
 @Dependent
 public class LocalizationDataProducer {
@@ -15,18 +17,12 @@ public class LocalizationDataProducer {
     private ConfiguratorService configuratorService;
 
     @Produces
-    @LocalizationPath
-    public String getPath(InjectionPoint injectionPoint) {
-        String variableName = injectionPoint.getMember().getName();
-        String name = injectionPoint.getAnnotated().getAnnotation(LocalizationPath.class).name();
-        return !name.equals("") ? configuratorService.getStringValue(name) : configuratorService.getStringValue(variableName);
-    }
-
-    @Produces
     @LocalizationBundle
-    public String getBundle(InjectionPoint injectionPoint) {
-        String variableName = injectionPoint.getMember().getName();
-        String name = injectionPoint.getAnnotated().getAnnotation(LocalizationPath.class).name();
-        return !name.equals("") ? configuratorService.getStringValue(name) : configuratorService.getStringValue(variableName);
+    public Set<String> getBundle() {
+        Set<String> values = new HashSet<>();
+        configuratorService.getAllKeys().forEach(key -> {
+            values.add(configuratorService.getStringValue(key));
+        });
+        return values;
     }
 }

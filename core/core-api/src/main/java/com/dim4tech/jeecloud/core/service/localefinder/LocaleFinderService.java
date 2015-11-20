@@ -5,5 +5,5 @@ import java.util.Locale;
 import java.util.Set;
 
 public interface LocaleFinderService {
-    Set<Locale> getLocales(String path, String bundle);
+    Set<Locale> getLocales(String bundlePath);
 }

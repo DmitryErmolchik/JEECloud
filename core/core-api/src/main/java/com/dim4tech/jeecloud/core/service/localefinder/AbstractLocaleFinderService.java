@@ -10,7 +10,7 @@ public abstract class AbstractLocaleFinderService implements LocaleFinderService
     protected Matcher matcher;
 
     @Override
-    abstract public Set<Locale> getLocales(String path, String bundle);
+    abstract public Set<Locale> getLocales(String bundlePath);
 
     protected Locale getLocale(String value) {
         matcher = localePattern.matcher(value);
@@ -36,4 +36,13 @@ public abstract class AbstractLocaleFinderService implements LocaleFinderService
     protected String getCountry() {
         return matcher.group(3);
     }
+
+    protected String getPath(String bundlePath) {
+        return bundlePath.substring(0, bundlePath.lastIndexOf("/"));
+    }
+
+    protected String getBundle(String bundlePath) {
+        return bundlePath.substring(bundlePath.lastIndexOf("/") + 1);
+    }
+
 }

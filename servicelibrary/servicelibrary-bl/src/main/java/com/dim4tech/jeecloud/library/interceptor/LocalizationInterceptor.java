@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
+import java.text.MessageFormat;
 
 @Interceptor
 @Localize
@@ -22,7 +23,16 @@ public class LocalizationInterceptor {
             return invocationcontext.proceed();
         }
         catch (JEECloudException ex) {
-            throw new JEECloudException(new JEECloudExceptionMessage(localizerService.localize(ex.getExceptionMessage().getMessage())));
+            throw new JEECloudException(new JEECloudExceptionMessage(enrichMessage(ex)));
         }
+    }
+
+    private String enrichMessage(JEECloudException ex) {
+        String localizedMessage = localizeMessage(ex.getExceptionMessage().getMessage());
+        return MessageFormat.format(localizedMessage, ex.getArgs());
+    }
+
+    private String localizeMessage(String message) {
+        return localizerService.localize(message);
     }
 }

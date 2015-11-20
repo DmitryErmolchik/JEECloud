@@ -9,5 +9,5 @@ import javax.enterprise.inject.Produces;
 public class ApplicationConfiguration {
     @Produces
     @ConfigurationProperty
-    private String applicationConfiguraton = "/application.properties";
+    private String applicationConfiguraton = "/localization.properties";
 }
