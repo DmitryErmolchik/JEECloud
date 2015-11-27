@@ -36,7 +36,7 @@ public class LibraryServiceSingletoneImpl implements LibraryService {
 
     @Override
     public void update(ServiceDescription serviceDescription) {
-            serviceDescriptionMap.get(serviceDescription.getName()).put(serviceDescription.getUrl(), serviceDescription);
+        serviceDescriptionMap.get(serviceDescription.getName()).put(serviceDescription.getUrl(), serviceDescription);
     }
 
     @Override
@@ -67,16 +67,22 @@ public class LibraryServiceSingletoneImpl implements LibraryService {
     }
 
     @Override
+    @Interceptors(LocalizationInterceptor.class)
     public ServiceDescription getServiceDescriptionWithMinimalLoad(String name) {
-        ServiceDescription result = null;
-        int minLoad = 100;
-        for (ServiceDescription serviceDescription : serviceDescriptionMap.get(name).values()) {
-            if (minLoad >= serviceDescription.getLoad()) {
-                minLoad = serviceDescription.getLoad();
-                result = serviceDescription;
+        try {
+            ServiceDescription result = null;
+            int minLoad = 100;
+            for (ServiceDescription serviceDescription : serviceDescriptionMap.get(name).values()) {
+                if (minLoad >= serviceDescription.getLoad()) {
+                    minLoad = serviceDescription.getLoad();
+                    result = serviceDescription;
+                }
             }
+            return result;
         }
-        return result;
+        catch (NullPointerException ex) {
+            throw new JEECloudException(LibraryExceptionMessage.SERVICE_NOT_EXISTS, name);
+        }
     }
 
     @Override
