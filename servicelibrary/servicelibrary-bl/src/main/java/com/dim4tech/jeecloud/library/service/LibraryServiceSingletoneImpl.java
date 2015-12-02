@@ -54,9 +54,9 @@ public class LibraryServiceSingletoneImpl implements LibraryService {
         delete(serviceDescription.getName(), serviceDescription.getUrl());
     }
 
-    @Localize
     @Override
-    @Interceptors(LocalizationInterceptor.class)
+    @Localize
+    //@Interceptors(LocalizationInterceptor.class)
     public ServiceDescription get(String name, URL url) {
         try {
             return serviceDescriptionMap.get(name).get(url);
@@ -67,7 +67,8 @@ public class LibraryServiceSingletoneImpl implements LibraryService {
     }
 
     @Override
-    @Interceptors(LocalizationInterceptor.class)
+    @Localize
+    //@Interceptors(LocalizationInterceptor.class)
     public ServiceDescription getServiceDescriptionWithMinimalLoad(String name) {
         try {
             ServiceDescription result = null;

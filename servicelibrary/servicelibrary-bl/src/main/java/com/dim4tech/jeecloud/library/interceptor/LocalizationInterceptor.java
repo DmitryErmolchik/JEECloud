@@ -11,8 +11,8 @@ import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 import java.text.MessageFormat;
 
-@Interceptor
 @Localize
+@Interceptor
 public class LocalizationInterceptor {
     @Inject
     private LocalizerService localizerService;
