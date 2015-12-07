@@ -1,6 +1,7 @@
 package com.dim4tech.jeecloud.library.rest;
 
 import com.dim4tech.jeecloud.core.domain.*;
+import com.dim4tech.jeecloud.core.service.sessioninfo.SessionInfoService;
 import com.dim4tech.jeecloud.library.domain.ServiceDescription;
 import com.dim4tech.jeecloud.library.service.LibraryService;
 
@@ -22,19 +23,25 @@ public class LibraryServiceController {
     private UriInfo uriInfo;
 
     @Inject
+    private SessionInfoService sessionInfoService;
+
+    @Inject
     private LibraryService libraryService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public JEECloudResponse<Set<ServiceDescription>> getServiceDescriptions() {
+    public JEECloudResponse<Set<ServiceDescription>> getServiceDescriptions(@DefaultValue("en") @QueryParam("lang") String language) {
+        sessionInfoService.setLocale(language);
         return new JEECloudResponse(libraryService.getAvailableServices(), null);
     }
 
     @GET
     @Path("{name}")
     @Produces(MediaType.APPLICATION_JSON)
-    public JEECloudResponse<ServiceDescription> getServiceDescriptionWithMinimalLoad(@PathParam("name") String name) {
+    public JEECloudResponse<ServiceDescription> getServiceDescriptionWithMinimalLoad(@PathParam("name") String name,
+                                                                                     @DefaultValue("en") @QueryParam("lang") String language) {
         try {
+            sessionInfoService.setLocale(language);
             return new JEECloudResponse<ServiceDescription>(libraryService.getServiceDescriptionWithMinimalLoad(name), null);
         }
         catch (Exception ex) {
@@ -45,8 +52,11 @@ public class LibraryServiceController {
     @GET
     @Path("{name}/{url}")
     @Produces(MediaType.APPLICATION_JSON)
-    public JEECloudResponse<ServiceDescription> getServiceDescription(@PathParam("name") String name, @PathParam("url") URL url) {
+    public JEECloudResponse<ServiceDescription> getServiceDescription(@PathParam("name") String name,
+                                                                      @PathParam("url") URL url,
+                                                                      @DefaultValue("en") @QueryParam("lang") String language) {
         try {
+            sessionInfoService.setLocale(language);
             return new JEECloudResponse<ServiceDescription>(libraryService.get(name, url), null);
         }
         catch (Exception ex) {

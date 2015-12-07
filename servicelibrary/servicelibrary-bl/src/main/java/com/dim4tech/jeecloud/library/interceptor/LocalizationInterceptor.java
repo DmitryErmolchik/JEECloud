@@ -4,6 +4,7 @@ import com.dim4tech.jeecloud.core.annotation.Localize;
 import com.dim4tech.jeecloud.core.domain.exception.JEECloudException;
 import com.dim4tech.jeecloud.core.domain.exception.JEECloudExceptionMessage;
 import com.dim4tech.jeecloud.core.service.localizer.LocalizerService;
+import com.dim4tech.jeecloud.core.service.sessioninfo.SessionInfoService;
 
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
@@ -16,6 +17,9 @@ import java.text.MessageFormat;
 public class LocalizationInterceptor {
     @Inject
     private LocalizerService localizerService;
+
+    @Inject
+    private SessionInfoService sessionInfoService;
 
     @AroundInvoke
     public Object localizeExceptionMessage(InvocationContext invocationcontext) throws Exception {
@@ -33,6 +37,6 @@ public class LocalizationInterceptor {
     }
 
     private String localizeMessage(String message) {
-        return localizerService.localize(message);
+        return localizerService.localize(message, sessionInfoService.getLocale());
     }
 }
