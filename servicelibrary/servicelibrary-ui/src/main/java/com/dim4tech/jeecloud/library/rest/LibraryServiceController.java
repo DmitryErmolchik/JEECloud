@@ -30,7 +30,7 @@ public class LibraryServiceController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public JEECloudResponse<Set<ServiceDescription>> getServiceDescriptions(@DefaultValue("en") @QueryParam("lang") String language) {
+    public JEECloudResponse<Set<ServiceDescription>> getServiceDescriptions(@DefaultValue(SessionInfoParam.DefaultValues.LANGUAGE) @QueryParam(SessionInfoParam.Names.LANGUAGE) String language) {
         sessionInfoService.setLocale(language);
         return new JEECloudResponse(libraryService.getAvailableServices(), null);
     }
@@ -39,7 +39,7 @@ public class LibraryServiceController {
     @Path("{name}")
     @Produces(MediaType.APPLICATION_JSON)
     public JEECloudResponse<ServiceDescription> getServiceDescriptionWithMinimalLoad(@PathParam("name") String name,
-                                                                                     @DefaultValue("en") @QueryParam("lang") String language) {
+                                                                                     @DefaultValue(SessionInfoParam.DefaultValues.LANGUAGE) @QueryParam(SessionInfoParam.Names.LANGUAGE) String language) {
         try {
             sessionInfoService.setLocale(language);
             return new JEECloudResponse<ServiceDescription>(libraryService.getServiceDescriptionWithMinimalLoad(name), null);
@@ -54,7 +54,7 @@ public class LibraryServiceController {
     @Produces(MediaType.APPLICATION_JSON)
     public JEECloudResponse<ServiceDescription> getServiceDescription(@PathParam("name") String name,
                                                                       @PathParam("url") URL url,
-                                                                      @DefaultValue("en") @QueryParam("lang") String language) {
+                                                                      @DefaultValue(SessionInfoParam.DefaultValues.LANGUAGE) @QueryParam(SessionInfoParam.Names.LANGUAGE) String language) {
         try {
             sessionInfoService.setLocale(language);
             return new JEECloudResponse<ServiceDescription>(libraryService.get(name, url), null);
