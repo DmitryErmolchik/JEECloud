@@ -6,6 +6,6 @@
                       http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
         bean-discovery-mode="all">
     <interceptors>
-        <class>com.dim4tech.jeecloud.library.interceptor.LocalizationInterceptor</class>
+        <class>com.dim4tech.jeecloud.core.service.localizer.LocalizerInterceptor</class>
     </interceptors>
 </beans>

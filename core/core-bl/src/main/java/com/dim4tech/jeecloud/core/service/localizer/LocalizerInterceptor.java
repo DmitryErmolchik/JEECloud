@@ -1,4 +1,4 @@
-package com.dim4tech.jeecloud.library.interceptor;
+package com.dim4tech.jeecloud.core.service.localizer;
 
 import com.dim4tech.jeecloud.core.annotation.Localize;
 import com.dim4tech.jeecloud.core.domain.exception.JEECloudException;
@@ -14,7 +14,7 @@ import java.text.MessageFormat;
 
 @Localize
 @Interceptor
-public class LocalizationInterceptor {
+public class LocalizerInterceptor {
     @Inject
     private LocalizerService localizerService;
 
@@ -33,7 +33,7 @@ public class LocalizationInterceptor {
 
     private String enrichMessage(JEECloudException ex) {
         String localizedMessage = localizeMessage(ex.getExceptionMessage().getMessage());
-        return MessageFormat.format(localizedMessage, ex.getArgs());
+        return MessageFormat.format(localizedMessage, ex.getArgs().toArray(new String[]{}));
     }
 
     private String localizeMessage(String message) {

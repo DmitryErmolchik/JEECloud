@@ -4,10 +4,8 @@ import com.dim4tech.jeecloud.core.annotation.Localize;
 import com.dim4tech.jeecloud.core.domain.exception.JEECloudException;
 import com.dim4tech.jeecloud.library.domain.LibraryExceptionMessage;
 import com.dim4tech.jeecloud.library.domain.ServiceDescription;
-import com.dim4tech.jeecloud.library.interceptor.LocalizationInterceptor;
 
 import javax.ejb.Singleton;
-import javax.interceptor.Interceptors;
 import java.net.URL;
 import java.util.*;
 
@@ -61,7 +59,7 @@ public class LibraryServiceSingletoneImpl implements LibraryService {
             return serviceDescriptionMap.get(name).get(url);
         }
         catch (NullPointerException ex) {
-            throw new JEECloudException(LibraryExceptionMessage.SERVICE_NOT_EXISTS, name);
+            throw new JEECloudException(LibraryExceptionMessage.SERVICE_WITH_NAME_AND_URL_NOT_EXISTS, name, url);
         }
     }
 
@@ -80,7 +78,7 @@ public class LibraryServiceSingletoneImpl implements LibraryService {
             return result;
         }
         catch (NullPointerException ex) {
-            throw new JEECloudException(LibraryExceptionMessage.SERVICE_NOT_EXISTS, name);
+            throw new JEECloudException(LibraryExceptionMessage.SERVICE_WITH_NAME_NOT_EXISTS, name);
         }
     }
 

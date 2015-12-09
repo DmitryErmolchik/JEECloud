@@ -29,7 +29,7 @@ public class LibraryServiceController {
     private LibraryService libraryService;
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaTypeUtf8.APPLICATION_JSON)
     public JEECloudResponse<Set<ServiceDescription>> getServiceDescriptions(@DefaultValue(SessionInfoParam.DefaultValues.LANGUAGE) @QueryParam(SessionInfoParam.Names.LANGUAGE) String language) {
         sessionInfoService.setLocale(language);
         return new JEECloudResponse(libraryService.getAvailableServices(), null);
@@ -37,7 +37,7 @@ public class LibraryServiceController {
 
     @GET
     @Path("{name}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaTypeUtf8.APPLICATION_JSON)
     public JEECloudResponse<ServiceDescription> getServiceDescriptionWithMinimalLoad(@PathParam("name") String name,
                                                                                      @DefaultValue(SessionInfoParam.DefaultValues.LANGUAGE) @QueryParam(SessionInfoParam.Names.LANGUAGE) String language) {
         try {
@@ -51,7 +51,7 @@ public class LibraryServiceController {
 
     @GET
     @Path("{name}/{url}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaTypeUtf8.APPLICATION_JSON)
     public JEECloudResponse<ServiceDescription> getServiceDescription(@PathParam("name") String name,
                                                                       @PathParam("url") URL url,
                                                                       @DefaultValue(SessionInfoParam.DefaultValues.LANGUAGE) @QueryParam(SessionInfoParam.Names.LANGUAGE) String language) {
@@ -65,7 +65,7 @@ public class LibraryServiceController {
     }
 
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaTypeUtf8.APPLICATION_JSON)
     public Response createServiceDescription(ServiceDescription serviceDescription) {
         libraryService.add(serviceDescription);
         URI serviceUri = uriInfo.getAbsolutePathBuilder().path(serviceDescription.getName()).build();
@@ -73,7 +73,7 @@ public class LibraryServiceController {
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaTypeUtf8.APPLICATION_JSON)
     public Response updateServiceDescription(ServiceDescription serviceDescription) {
         libraryService.add(serviceDescription);
         URI serviceUri = uriInfo.getAbsolutePathBuilder().path(serviceDescription.getName()).build();
